@@ -1,0 +1,7 @@
+*.img
+*.lst
+*.bin
+*.sys
+z_*/
+.vscode/
+HariboteOS/
