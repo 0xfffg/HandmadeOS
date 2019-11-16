@@ -81,18 +81,11 @@ next_load:
 		CMP		CH,CYLS
 		JB		readloop
 
-		MOV		[0x0ff0],CH		; IPLがどこまで読んだのかを0x0ff0にメモ
+		MOV		[0x0ff0],CH		; IPLがフロッピーをどこまで読んだのかを、メモリの0x0ff0にメモ
 
 ;読み込み完了後 merihari.sys 実行
-
-load_sys:
 		JMP		0xc200
 
-; CPU停止
-
-fin:
-		HLT					; 何かあるまでCPUを停止させる
-		JMP		fin			; 無限ループ
 error:
 		MOV		SI,err_msg
 putloop:
@@ -104,6 +97,9 @@ putloop:
 		MOV		BX,15			; カラーコード
 		INT		0x10			; ビデオBIOS呼び出し
 		JMP		putloop
+fin:
+		HLT					; 何かあるまでCPUを停止させる
+		JMP		fin			; 無限ループ
 err_msg:
 		DB		0x0a, 0x0a		; 改行を2つ
 		DB		"load error"
